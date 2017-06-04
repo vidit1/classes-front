@@ -3,6 +3,11 @@
 An application to make parent children relationship between classes
 ### Functionalities
 
+New Class can be created in two ways-
+- A class can be inherited from another class by doing this all the properties of the parent class is accessible
+- Simple new class is created with no properties attached to it
+
+
 Each class created is displayed in the form of cards containing information
 - Name
 - Properties : key value pair of the class
