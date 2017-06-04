@@ -1,34 +1,40 @@
-
 <div id="mainDiv" ng-controller="MainCtrl as $ctrl">
-    <div class="row text-center nav-bar" >
-        <span class="heading" >Classes</span>
-        <button class="btn create-button" data-toggle="modal" data-target="#newClass" ng-click="constructNewClass(false);">+ Create New Class</button>
-        <button class="btn create-button" data-toggle="modal" data-target="#newClass" ng-click="constructNewClass(true);">+ Create New Class From Existing Class</button>
+    <div class="row text-center nav-bar">
+        <span class="heading">Classes</span>
+        <button class="btn create-button" data-toggle="modal" data-target="#newClass"
+                ng-click="constructNewClass(false);">
+            + Create New Class
+        </button>
+        <button class="btn create-button" data-toggle="modal" data-target="#newClass"
+                ng-click="constructNewClass(true);">
+            + Create New Class From Existing Class
+        </button>
     </div>
-    <div class="col-md-12 text-center" style="margin: 20px 0">
-        <div class="col-md-3 class-info-button padding-0" ng-repeat="classInfo in classes" style="margin: 10px">
+    <div class="row row-centered" style="margin: 20px 0">
+        <div class="col-md-3 class-info-button padding-0 col-centered" ng-repeat="classInfo in classes"
+             style="margin: 10px">
             <div class="col-md-12">
-                <span style="font-size: 25px;float: left">{{classInfo.name}}</span> &nbsp;&nbsp;
-                <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editClass"
-                      ng-click="createEditStructure(classInfo._id)"  style="float: right; margin-left: 10px" ></span>
-                <span class="glyphicon glyphicon glyphicon-search" data-toggle="modal" data-target="#viewClass"
-                      ng-click="viewClass(classInfo._id)"  style="float: right; margin-left: 10px"></span>
-                <span class="glyphicon glyphicon-trash" style="float: right" ng-if="!classInfo.children.length"
+                <span class="class-name">{{classInfo.name}}</span> &nbsp;&nbsp;
+                <span class="glyphicon glyphicon-edit icon" data-toggle="modal" data-target="#editClass"
+                      ng-click="createEditStructure(classInfo._id)"></span>
+                <span class="glyphicon glyphicon glyphicon-search icon" data-toggle="modal" data-target="#viewClass"
+                      ng-click="viewClass(classInfo._id)"></span>
+                <span class="glyphicon glyphicon-trash icon" ng-if="!classInfo.children.length"
                       ng-click="delete(classInfo._id)"></span>
             </div>
             <div class="col-md-7">
-                <span style="font-size: 15px">Properties: </span>
+                <span class="card-sub-headings">Properties: </span>
                 <div class="col-md-12 padding-0">
-                    <div class="col-md-6 text-left" style="text-decoration: underline">Key : </div>
+                    <div class="col-md-6 text-left" style="text-decoration: underline">Key :</div>
                     <div class="col-md-6 text-right" style="text-decoration: underline">Value</div>
                 </div>
                 <div class="col-md-12 padding-0" ng-repeat="(key,value) in classInfo.properties">
                     <div class="col-md-6  text-left ">{{key}}</div>
-                    <div class="col-md-6 text-right" >{{value}}</div>
+                    <div class="col-md-6 text-right">{{value}}</div>
                 </div>
             </div>
-            <div class="col-md-5 text-left" style="background: #f1f0f0;">
-                <span style="font-size: 15px">Relationship: </span><br>
+            <div class="col-md-5 text-left relationship">
+                <span class="card-sub-headings">Relationship: </span><br>
                 <span> Parent : {{classInfo.parent_id ? classes[classInfo.parent_id].name:"--"}}</span><br>
                 <span> Children : {{classInfo.children.length ? "":"--"}}<br>
                     <span ng-repeat="child in classInfo.children">
@@ -48,21 +54,20 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Create New Class</h4>
                 </div>
-                <div class="modal-body" style="display: grid">
+                <div class="modal-body">
 
-                    <div  ng-if="fromExisting" >
+                    <div ng-if="fromExisting">
                         <p>Click On a class to select as new class parent:</p>
-                        <div >
+                        <div>
                             <div class="col-md-3" ng-repeat="classInfo in classes">
-                                <button class="btn"  style="margin: 10px"
+                                <button class="btn" style="margin: 10px"
                                         ng-click=selectParent(classInfo._id)>
                                     {{classInfo.name}}
                                 </button>
                             </div>
-
                         </div>
                     </div>
-                    <div ng-if="!fromExisting" >
+                    <div ng-if="!fromExisting">
                         <span>Enter Name of the Class.</span>
                         <input class="form-control" type="text" ng-model="newClass.name" placeholder="Class Name"/>
                         <br>
@@ -74,11 +79,13 @@
                                 </div>
                                 <div class="col-md-1">:</div>
                                 <div class="col-md-7 padding-0">
-                                    <input class="form-control" type="text" ng-model="property.value" placeholder="value">
+                                    <input class="form-control" type="text" ng-model="property.value"
+                                           placeholder="value">
                                 </div>
                             </div>
                             <div class="col-md-12 text-center">
-                                <button class="btn text-center" ng-click="newClass.properties.push({key:'',value:''})" style="margin: 5px 0">
+                                <button class="btn text-center" ng-click="newClass.properties.push({key:'',value:''})"
+                                        style="margin: 5px 0">
                                     Add New Property
                                 </button>
                             </div>
@@ -86,8 +93,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createClass(newClass)">Add Class</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="newClass= {}">Close</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="createClass(newClass)">
+                        Add Class
+                    </button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="newClass= {}">Close
+                    </button>
                 </div>
             </div>
 
@@ -96,14 +106,12 @@
 
     <div id="editClass" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Edit Class - ({{editClass.name}})</h4>
                 </div>
-                <div class="modal-body" style="display: grid">
+                <div class="modal-body">
                     <p>Properties </p>
                     <div ng-repeat="property in editClass.properties" ng-if="!property.delete">
                         <div class="col-md-3 padding-0">
@@ -118,13 +126,15 @@
                         </div>
                     </div>
                     <div class="col-md-12 text-center">
-                        <button class="btn text-center" ng-click="editClass.properties.push({key:'',value:''})" style="margin: 5px 0">
+                        <button class="btn text-center" ng-click="editClass.properties.push({key:'',value:''})"
+                                style="margin: 5px 0">
                             Add New Property
                         </button>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateClass()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateClass()">Update
+                    </button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -133,22 +143,35 @@
     </div>
     <div id="viewClass" class="modal fade" role="dialog">
         <div class="modal-dialog">
-
-            <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Class Info- {{viewOnly.name}}</h4>
                 </div>
-                <div class="modal-body" style="display: grid">
-                    <p>Find Value </p><input class="text" ng-model="key">{{viewOnly.properties[key]}}
+                <div class="modal-body">
+                    <div class="find-key">
+                        <input type="text" class="form-control" ng-model="key" placeholder="Enter Key see its value">
+                        <span class="value">Value : {{key.length ? viewOnly.properties[key] ? viewOnly.properties[key] :" No such key Exists" : "--"}}</span>
+                    </div>
+
+                    <div class="row">
+                        <p style="font-size: 24px;">
+                            Relationship
+                        </p>
+                        <div class="col-md-12" ng-repeat="class in viewOnly.propertyChain" style="    font-size: 17px;">
+                            <span class="class-heading" style="font-size: 23px">{{class.name}}</span>
+                            <br>
+                            <div ng-repeat="(key, value) in class.properties">
+                                {{key}} : {{value}}
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

@@ -54,7 +54,48 @@ li {
     padding: 0;
 }
 
+.modal-body{
+    display: grid
+}
+
 .create-button{
     background: white;
     font-weight: 600;
+}
+/***********Class info card**********/
+.class-name {
+    font-size: 25px;
+    float: left
+}
+.card-sub-headings{
+    font-size: 15px
+}
+.relationship{
+    background: #f1f0f0;
+}
+.icon {
+    float: right;
+    margin-left: 10px
+}
+.row-centered {
+    text-align:center;
+}
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}
+/************************************/
+
+
+/************ Find Modal**************/
+.find-key{
+    border-bottom: 1px solid #b7b4b4;
+    margin-bottom: 23px;
+}
+.value {
+    margin-top: 5px;
+    font-size: 20px
 }

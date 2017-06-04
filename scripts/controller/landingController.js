@@ -110,10 +110,28 @@ myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
         $scope.viewOnly = {
             name : $scope.classes[id].name
         };
-        var properties = createLink(id);
-        console.log(properties);
-        $scope.viewOnly.properties = properties
+        $scope.viewOnly.properties = createLink(id);
+        $scope.viewOnly.propertyChain = [];
+        createPropertyChain(id,$scope.viewOnly.propertyChain);
+
+        console.log($scope.viewOnly.propertyChain);
     };
+
+    function createPropertyChain(id, array){
+        var  temp = {
+            id : id,
+            name : $scope.classes[id].name,
+            properties : $scope.classes[id].properties
+        };
+        if(array.length){
+            temp.name = "Parent("+array[array.length-1].name+") = " + temp.name;
+        }
+        array.push(temp);
+        console.log(temp);
+        if($scope.classes[id].parent_id){
+            createPropertyChain($scope.classes[id].parent_id, array)
+        }
+    }
 
     function createLink(id){
         let temp = {};
