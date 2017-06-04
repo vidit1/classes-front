@@ -3,4 +3,4 @@
  */
 
 var HOST_NAME = "https://arcane-sierra-54121.herokuapp.com/";
-// var HOST_NAME = "http://localhost:8000/";
+var socketIO = io.connect(HOST_NAME);

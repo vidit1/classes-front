@@ -1,10 +1,6 @@
 'use strict';
 
 myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
-    $scope.fromExisting = false;
-    $scope.newClass = {
-        properties: [{key:'',value:''}]
-    };
     $scope.classes = {};
     $scope.showloading = true;
 
@@ -21,7 +17,7 @@ myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
     },function(error){
         console.log(error)
     });
-    
+
     $scope.delete = function(id){
         classInfo.delete(id).then(function(result){
             result = result.data;
@@ -37,7 +33,7 @@ myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
         
     };
     
-    $scope.initiateNewClass = function(flag){
+    $scope.constructNewClass = function(flag){
         $scope.fromExisting = flag;
         $scope.newClass={};
         $scope.newClass.properties = [{key:'',value:''}];  
@@ -46,15 +42,14 @@ myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
     $scope.selectParent = function(id){
         $scope.fromExisting = false;
         $scope.newClass.parent_id = id;
-
     };
 
     $scope.createClass = function (newClass){
         console.log(newClass.properties);
         var tempProperties = {};
         for(var i=0;i<newClass.properties.length;i++){
-            if(newClass.properties[i].key )
-                tempProperties[newClass.properties[i].key] = newClass.properties[i].value
+            if(newClass.properties[i].key.toString() )
+                tempProperties[newClass.properties[i].key.toString()] = newClass.properties[i].value
         }
         newClass.properties = tempProperties;
         console.log(newClass);
@@ -71,19 +66,58 @@ myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
 
         })
     };
+
+    $scope.createEditStructure = function (id){
+        $scope.editClass = {
+            name : $scope.classes[id].name,
+            _id : $scope.classes[id]._id,
+            properties : []
+        };
+        
+        for(var key in $scope.classes[id].properties){
+            if(!$scope.classes[id].properties.hasOwnProperty(key))
+                continue;
+            var temp = {
+                key : key,
+                value : $scope.classes[id].properties[key],
+                _id : $scope.classes[id]._id,
+                delete : false
+            };
+            $scope.editClass.properties.push(temp);
+        }
+    };
+
+    $scope.updateClass = function () {
+        var properties = {};
+        for (var i = 0; i < $scope.editClass.properties.length; i++) {
+            if ($scope.editClass.properties[i].key.toString())
+                properties[$scope.editClass.properties[i].key.toString()] = $scope.editClass.properties[i].value
+        }
+
+        classInfo.update(properties,$scope.editClass._id).then(function(result){
+            result = result.data;
+            if(result.hasOwnProperty("error")){
+                console.error(result.error);
+                return;
+            }
+            console.log(result)
+        },function(error){
+            console.error(error);
+        })
+    };
     
     
     ///////////////////////Sockets Events/////////////////////////////////////
-    socketIO.on('my other event', function (data) {
-        console.log(data);
-    });
     socketIO.on("new_class",function(data){
+        console.log("New class event");
         if(!$scope.classes[data._id]){
             $scope.classes[data._id] = data;
+            console.log($scope.classes[data._id]);
             $scope.$digest();
         }
     });
     socketIO.on("update_class",function(data){
+        console.log("update class event",data);
         $scope.classes[data._id] = data;
         $scope.$digest();
     });
