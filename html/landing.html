@@ -9,8 +9,12 @@
         <div class="col-md-3 class-info-button padding-0" ng-repeat="classInfo in classes" style="margin: 10px">
             <div class="col-md-12">
                 <span style="font-size: 25px;float: left">{{classInfo.name}}</span> &nbsp;&nbsp;
-                <span class="glyphicon glyphicon-edit" style="float: right;margin-left: 11px" data-toggle="modal" data-target="#editClass" ng-click="createEditStructure(classInfo._id)"></span>
-                <span class="glyphicon glyphicon-trash" style="float: right" ng-if="!classInfo.children.length" ng-click="delete(classInfo._id)"></span>
+                <span class="glyphicon glyphicon-edit" data-toggle="modal" data-target="#editClass"
+                      ng-click="createEditStructure(classInfo._id)"  style="float: right; margin-left: 10px" ></span>
+                <span class="glyphicon glyphicon glyphicon-search" data-toggle="modal" data-target="#viewClass"
+                      ng-click="viewClass(classInfo._id)"  style="float: right; margin-left: 10px"></span>
+                <span class="glyphicon glyphicon-trash" style="float: right" ng-if="!classInfo.children.length"
+                      ng-click="delete(classInfo._id)"></span>
             </div>
             <div class="col-md-7">
                 <span style="font-size: 15px">Properties: </span>
@@ -97,7 +101,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Edit Class - (editClass.name)</h4>
+                    <h4 class="modal-title">Edit Class - ({{editClass.name}})</h4>
                 </div>
                 <div class="modal-body" style="display: grid">
                     <p>Properties </p>
@@ -121,6 +125,26 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="updateClass()">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="viewClass" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Class Info- {{viewOnly.name}}</h4>
+                </div>
+                <div class="modal-body" style="display: grid">
+                    <p>Find Value </p><input class="text" ng-model="key">{{viewOnly.properties[key]}}
+
+                </div>
+                <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>

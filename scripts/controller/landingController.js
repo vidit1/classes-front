@@ -105,8 +105,32 @@ myApp.controller('MainCtrl', function MainCtrl($http,$scope, classInfo) {
             console.error(error);
         })
     };
-    
-    
+
+    $scope.viewClass = function(id){
+        $scope.viewOnly = {
+            name : $scope.classes[id].name
+        };
+        var properties = createLink(id);
+        console.log(properties);
+        $scope.viewOnly.properties = properties
+    };
+
+    function createLink(id){
+        let temp = {};
+        if($scope.classes[id].parent_id){
+            temp = createLink($scope.classes[id].parent_id)
+        } else {
+            return $scope.classes[id].properties
+        }
+        let prototype = Object.create(temp);
+        for(var key in $scope.classes[id].properties){
+            if($scope.classes[id].properties.hasOwnProperty(key)) {
+                prototype[key.toString()] = $scope.classes[id].properties[key]
+            }
+        }
+        return prototype;
+    }
+
     ///////////////////////Sockets Events/////////////////////////////////////
     socketIO.on("new_class",function(data){
         console.log("New class event");
