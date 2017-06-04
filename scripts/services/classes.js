@@ -5,7 +5,7 @@ myApp.service('classInfo',function($http){
     };
     
     this.delete = function(id){
-        let body = {
+        var body = {
             method: "post",
             url: HOST_NAME + "delete",
             data: {
@@ -20,7 +20,7 @@ myApp.service('classInfo',function($http){
     };
     
     this.create = function(classInfo){
-        let body = {
+        var body = {
             method: "post",
             url: HOST_NAME + "create",
             data: classInfo,
