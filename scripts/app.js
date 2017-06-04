@@ -1,18 +1,17 @@
+var myApp = angular.module('myApp', ['ui.router']);
 
-    var myApp = angular.module('myApp', ['ui.router']);
+myApp.config(function ($stateProvider, $urlRouterProvider) {
 
-    myApp.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise('/landing');
 
-        $urlRouterProvider.otherwise('/landing');
+    $stateProvider
 
-        $stateProvider
-
-        // HOME STATES AND NESTED VIEWS ========================================
-            .state('landing', {
-                url: '/landing',
-                templateUrl: 'html/landing.html'
-            })
-    });
+    // HOME STATES AND NESTED VIEWS ========================================
+        .state('landing', {
+            url: '/landing',
+            templateUrl: 'html/landing.html'
+        })
+});
 
  
 
