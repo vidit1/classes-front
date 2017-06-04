@@ -90,7 +90,7 @@ myApp.controller('MainCtrl', function MainCtrl($http, $scope, classInfo) {
     $scope.updateClass = function () {
         var properties = {};
         for (var i = 0; i < $scope.editClass.properties.length; i++) {
-            if ($scope.editClass.properties[i].key.toString())
+            if ($scope.editClass.properties[i].key.toString() && !$scope.editClass.properties[i].delete)
                 properties[$scope.editClass.properties[i].key.toString()] = $scope.editClass.properties[i].value
         }
 
